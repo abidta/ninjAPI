@@ -24,7 +24,7 @@ axios.interceptors.response.use(updateResTime, (err) => {
 
 function Form({ onResponse }) {
   const [formData, setFormData] = useState({
-    url: '',
+    url: 'https://jsonplaceholder.typicode.com/todos/1',
     method: 'GET',
     params: [],
     headers: [],
@@ -76,7 +76,6 @@ function Form({ onResponse }) {
           })
             .catch((e) => e)
             .then((response) => {
-              console.log(response)
               onResponse(response)
             })
         }}
