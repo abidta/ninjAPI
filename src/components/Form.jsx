@@ -22,7 +22,7 @@ axios.interceptors.response.use(updateResTime, (err) => {
   return Promise.reject(updateResTime(err.response))
 })
 
-function Form({ onResponse }) {
+function Form({ onResponse, onLoading }) {
   const [formData, setFormData] = useState({
     url: 'https://jsonplaceholder.typicode.com/todos/1',
     method: 'GET',
@@ -67,6 +67,7 @@ function Form({ onResponse }) {
         action=""
         onSubmit={(e) => {
           e.preventDefault()
+          onLoading()
           console.log(formData, 'formkl')
           axios({
             url: formData.url,
@@ -102,5 +103,6 @@ function Form({ onResponse }) {
 }
 Form.propTypes = {
   onResponse: PropTypes.func.isRequired,
+  onLoading: PropTypes.func.isRequired,
 }
 export default Form
