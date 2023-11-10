@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useState,useCallback } from 'react'
 import KeyValue from './KeyValue'
 import PropTypes from 'prop-types'
+import CodeMirror, { basicSetup } from '@uiw/react-codemirror'
+import { json } from '@codemirror/lang-json'
 
 function TabContent(props) {
   const [keyValueElement, setKeyValueElement] = useState([])
+  const [jsonVal,setJson]=useState("{\n\t\n}")
+  const onJson=useCallback((val,)=>{
+    console.log(val,'val');
+    setJson(val)
+  },[])
   const removeElement = (objValue) => {
     console.log(objValue, 'kkkkkkkkkk')
     setKeyValueElement(
@@ -21,7 +28,9 @@ function TabContent(props) {
   if (props.json) {
     return (
       <div className="tab-content p-3 border-top-0 border ">
-        <div className="overflow-auto" style={{ maxHeight: 200 }}></div>
+        <div className="overflow-auto" style={{ maxHeight: 200 }}>
+        <CodeMirror value={jsonVal} height='160px' onChange={onJson}  extensions={[basicSetup(),json()]} />
+        </div>
       </div>
     )
   }

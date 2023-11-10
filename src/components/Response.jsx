@@ -2,6 +2,9 @@ import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import PropTypes from 'prop-types'
 import prettyBytes from 'pretty-bytes'
+import CodeMirror, { basicSetup } from '@uiw/react-codemirror'
+import { json } from '@codemirror/lang-json'
+import { okaidia } from '@uiw/codemirror-theme-okaidia'
 
 function Response({ response }) {
   return (
@@ -27,7 +30,23 @@ function Response({ response }) {
         </div>
       </div>
       <Tabs defaultActiveKey="body" id="controlled-tab" className="">
-        <Tab className="" eventKey="body" title="Body"></Tab>
+        <Tab className="" eventKey="body" title="Body">
+          <CodeMirror
+            theme={okaidia}
+            value={JSON.stringify(response.data)}
+            height="200px"
+            editable={false}
+            extensions={[
+              json(),
+              basicSetup({
+                foldGutter: false,
+                dropCursor: false,
+                allowMultipleSelections: false,
+                indentOnInput: false,
+              }),
+            ]}
+          />
+        </Tab>
         <Tab eventKey="headers" title="Headers">
           <div
             style={{

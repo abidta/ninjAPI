@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 
 function UrlMethods({ onChange, setMethod }) {
-  const [url, setUrl] = useState('http://')
+  const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/todos/1')
   const [select, setSelect] = useState('GET')
   const handleUrl = (e) => {
     setUrl(e.target.value)
