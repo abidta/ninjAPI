@@ -10,7 +10,7 @@ function Response({ response }) {
         <div className="ms-3"></div>
         Status: <span>{response.status}</span>
         <div className="ms-3">
-          Time: <span></span>
+          Time: <span>{response.customData.resTime} <span>ms</span></span>
         </div>
         <div className="ms-3">
           Size: <span></span>

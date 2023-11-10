@@ -6,6 +6,22 @@ import Tabs from 'react-bootstrap/Tabs'
 import TabContent from './TabContent'
 import UrlMethods from './UrlMethods'
 
+const updateResTime = (response) => {
+  console.log('kl')
+  response.customData = response.customData || {}
+  response.customData.resTime =
+    new Date().getTime() - response.config.customData.reqTime
+  return response
+}
+axios.interceptors.request.use((request) => {
+  request.customData = request.customData || {}
+  request.customData.reqTime = new Date().getTime()
+  return request
+})
+axios.interceptors.response.use(updateResTime, (err) => {
+  return Promise.reject(updateResTime(err.response))
+})
+
 function Form({ onResponse }) {
   const [formData, setFormData] = useState({
     url: '',
@@ -57,9 +73,12 @@ function Form({ onResponse }) {
             method: formData.method,
             params: toObject(formData.params),
             headers: toObject(formData.headers),
-          }).then((response) => {
-            onResponse(response)
           })
+            .catch((e) => e)
+            .then((response) => {
+              console.log(response)
+              onResponse(response)
+            })
         }}
       >
         <UrlMethods setMethod={handleMethods} onChange={handleUrls} />
