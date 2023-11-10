@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import  { useState } from 'react'
+import { useState } from 'react'
 
-function KeyValue({ onChange, element, objValue }) {
+function KeyValue({ onChange, element, objValue, removeElement }) {
   const [keyInput, setKeyInput] = useState('')
   const [value, setValue] = useState('')
   const handleKey = (e) => {
@@ -30,7 +30,7 @@ function KeyValue({ onChange, element, objValue }) {
     console.log(element)
   }
   return (
-    <div className="input-group my-2">
+    <div className="input-group my-2 ">
       <input
         onChange={handleKey}
         value={keyInput}
@@ -45,7 +45,15 @@ function KeyValue({ onChange, element, objValue }) {
         className="form-group me-2 "
         placeholder="Value"
       />
-      <button className="btn btn-danger">Remove</button>
+      <button
+        onClick={(e) => {
+          e.preventDefault()
+          removeElement(objValue)
+        }}
+        className="btn btn-danger"
+      >
+        Remove
+      </button>
     </div>
   )
 }

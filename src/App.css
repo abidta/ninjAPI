@@ -1,0 +1,8 @@
+.tab-style {
+  max-height: 160px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.tab-style::-webkit-scrollbar {
+  display: none;
+}
