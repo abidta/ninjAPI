@@ -28,6 +28,7 @@ function Form({ onResponse, onLoading }) {
     method: 'GET',
     params: [],
     headers: [],
+    data: {},
   })
   const updateForms = (element) => {
     setFormData({
@@ -52,6 +53,9 @@ function Form({ onResponse, onLoading }) {
   const handleMethods = (method) => {
     setFormData({ ...formData, method })
   }
+  const handleData = (data) => {
+    setFormData({ ...formData, data })
+  }
   const toObject = (array) => {
     return array.reduce((data, pair) => {
       console.log(data, 'klkl')
@@ -61,6 +65,13 @@ function Form({ onResponse, onLoading }) {
       return { ...data, [key]: value }
     }, {})
   }
+  const toJson = (data) => {
+    try {
+      return JSON.parse(data)
+    } catch (e) {
+      return {}
+    }
+  }
   return (
     <div className="p-4">
       <form
@@ -68,15 +79,17 @@ function Form({ onResponse, onLoading }) {
         onSubmit={(e) => {
           e.preventDefault()
           onLoading()
-          console.log(formData, 'formkl')
+          console.log(toObject(formData.params), 'formkl')
           axios({
             url: formData.url,
             method: formData.method,
             params: toObject(formData.params),
             headers: toObject(formData.headers),
+            data: toJson(formData.data),
           })
             .catch((e) => e)
             .then((response) => {
+              console.log(response)
               onResponse(response)
             })
         }}
@@ -87,7 +100,7 @@ function Form({ onResponse, onLoading }) {
             <TabContent params onRemove={updateForms} onChange={handleParams} />
           </Tab>
           <Tab eventKey="json" title="JSON">
-            <TabContent json />
+            <TabContent json onChange={handleData} />
           </Tab>
           <Tab eventKey="headers" title="Headers">
             <TabContent

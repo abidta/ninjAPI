@@ -4,9 +4,13 @@ import PropTypes from 'prop-types'
 import prettyBytes from 'pretty-bytes'
 import CodeMirror, { basicSetup } from '@uiw/react-codemirror'
 import { json } from '@codemirror/lang-json'
-import { okaidia } from '@uiw/codemirror-theme-okaidia'
+import { html } from '@codemirror/lang-html'
+import { githubLight } from '@uiw/codemirror-theme-github'
 
 function Response({ response }) {
+  const getContentType = () => {
+    return response.headers['content-type'].split(';')[0]
+  }
   return (
     <div className="mt-5 ms-3">
       <h3>Response</h3>
@@ -31,21 +35,27 @@ function Response({ response }) {
       </div>
       <Tabs defaultActiveKey="body" id="controlled-tab" className="">
         <Tab className="" eventKey="body" title="Body">
-          <CodeMirror
-            theme={okaidia}
-            value={JSON.stringify(response.data)}
-            height="200px"
-            editable={false}
-            extensions={[
-              json(),
-              basicSetup({
-                foldGutter: false,
-                dropCursor: false,
-                allowMultipleSelections: false,
-                indentOnInput: false,
-              }),
-            ]}
-          />
+          <div className="overflow-auto">
+            <CodeMirror
+              theme={githubLight}
+              value={
+                getContentType() === 'application/json'
+                  ? JSON.stringify(response.data, null, 2)
+                  : response.data
+              }
+              height="200px"
+              editable={false}
+              extensions={[
+                getContentType() === 'application/json' ? json() : html(),
+                basicSetup({
+                  foldGutter: false,
+                  dropCursor: false,
+                  allowMultipleSelections: false,
+                  indentOnInput: false,
+                }),
+              ]}
+            />
+          </div>
         </Tab>
         <Tab eventKey="headers" title="Headers">
           <div
