@@ -8,8 +8,8 @@ import { html } from '@codemirror/lang-html'
 import { githubLight } from '@uiw/codemirror-theme-github'
 
 function Response({ response }) {
-  const getContentType = () => {
-    return response.headers['content-type'].split(';')[0]
+  const getContentType = (headers) => {
+    return headers['content-type'].split(';')[0]
   }
   return (
     <div className="mt-5 ms-3">
@@ -39,14 +39,14 @@ function Response({ response }) {
             <CodeMirror
               theme={githubLight}
               value={
-                getContentType() === 'application/json'
+                getContentType(response.headers) === 'application/json'
                   ? JSON.stringify(response.data, null, 2)
                   : response.data
               }
               height="200px"
               editable={false}
               extensions={[
-                getContentType() === 'application/json' ? json() : html(),
+                getContentType(response.headers) === 'application/json' ? json() : html(),
                 basicSetup({
                   foldGutter: false,
                   dropCursor: false,

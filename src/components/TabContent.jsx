@@ -3,6 +3,7 @@ import KeyValue from './KeyValue'
 import PropTypes from 'prop-types'
 import CodeMirror, { basicSetup } from '@uiw/react-codemirror'
 import { json } from '@codemirror/lang-json'
+import {  githubLight } from '@uiw/codemirror-theme-github'
 
 function TabContent(props) {
   const [keyValueElement, setKeyValueElement] = useState([])
@@ -31,9 +32,18 @@ function TabContent(props) {
         <div className="overflow-auto" style={{ maxHeight: 200 }}>
           <CodeMirror
             value={jsonVal}
+            theme={githubLight}
             height="160px"
             onChange={onJson}
-            extensions={[basicSetup(), json()]}
+            extensions={[
+              basicSetup({
+                foldGutter: false,
+                dropCursor: false,
+                allowMultipleSelections: false,
+                indentOnInput: false,
+              }),
+              json(),
+            ]}
           />
         </div>
       </div>
