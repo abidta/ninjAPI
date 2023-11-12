@@ -66,7 +66,6 @@ function Response({ response }) {
             }}
           >
             {Object.keys(response.headers).map((key, value) => {
-              console.log(key, response.headers[key], 'res')
               return (
                 <div style={{ display: 'contents' }} key={value}>
                   <div>{key}</div>

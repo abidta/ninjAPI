@@ -19,12 +19,14 @@ function App() {
     <>
       <Form onLoading={handleLoader} onResponse={responseHandler} />
       {loader && (
-        <div className="col-md-5 mx-auto text-center">  <Spinner  animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner></div>
-      
+        <div className="col-md-5 mx-auto text-center">
+          {' '}
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       )}
-      {response.message&&<Error err={'something went wrong'}/>}
+      {response.message && <Error err={'something went wrong'} />}
       {response.data && <Response response={response} />}
     </>
   )

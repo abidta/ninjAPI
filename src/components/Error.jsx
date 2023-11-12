@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
 function Error({ err }) {
   return (
     <div className="col-md-5 mx-auto ">
@@ -7,8 +7,8 @@ function Error({ err }) {
     </div>
   )
 }
-Error.propTypes={
-    err: PropTypes.string
+Error.propTypes = {
+  err: PropTypes.string,
 }
 
 export default Error

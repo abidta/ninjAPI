@@ -8,7 +8,6 @@ import TabContent from './TabContent'
 import UrlMethods from './UrlMethods'
 
 const updateResTime = (response) => {
-  console.log('kl')
   response.customData = response.customData || {}
   response.customData.resTime =
     new Date().getTime() - response.config.customData.reqTime
@@ -25,7 +24,7 @@ axios.interceptors.response.use(updateResTime, (err) => {
 
 function Form({ onResponse, onLoading }) {
   const [formData, setFormData] = useState({
-    url: 'https://jsonplaceholder.typicode.com/todos/1',
+    url: 'https://jsonplaceholder.typicode.com/todos/',
     method: 'GET',
     params: [],
     headers: [],
@@ -42,7 +41,6 @@ function Form({ onResponse, onLoading }) {
     })
   }
   const handleParams = (params) => {
-    console.log(params, 'rtr')
     setFormData({ ...formData, params: params })
   }
   const handleHeaders = (headers) => {
@@ -80,8 +78,8 @@ function Form({ onResponse, onLoading }) {
         action=""
         onSubmit={(e) => {
           e.preventDefault()
+          console.log('form data before setup',formData);
           onLoading()
-          console.log(toObject(formData.params), 'formkl')
           axios({
             url: formData.url,
             method: formData.method,
@@ -94,7 +92,7 @@ function Form({ onResponse, onLoading }) {
           })
             .catch((e) => e)
             .then((response) => {
-              console.log(response)
+              console.log('Response data',response)
               onResponse(response)
             })
         }}

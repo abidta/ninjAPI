@@ -7,13 +7,14 @@ import { json } from '@codemirror/lang-json'
 function TabContent(props) {
   const [keyValueElement, setKeyValueElement] = useState([])
   const [jsonVal, setJson] = useState('{\n\t\n}')
-  const onJson = useCallback((val) => {
-    console.log(val, 'val')
-    setJson(val)
-    props.onChange(val)
-  }, [props])
+  const onJson = useCallback(
+    (val) => {
+      setJson(val)
+      props.onChange(val)
+    },
+    [props]
+  )
   const removeElement = (objValue) => {
-    console.log(objValue, 'kkkkkkkkkk')
     setKeyValueElement(
       keyValueElement.filter((obj) => {
         if (obj.id !== objValue.id) {
@@ -22,8 +23,6 @@ function TabContent(props) {
         return null
       })
     )
-    console.log(keyValueElement, 'onremove')
-
     props.onRemove(objValue)
   }
   if (props.json) {
@@ -43,7 +42,6 @@ function TabContent(props) {
   return (
     <div className="tab-content p-3 border-top-0 border h-25 tab-style">
       {keyValueElement.map((value, index) => {
-        console.log(value)
         return (
           <KeyValue
             removeElement={removeElement}
