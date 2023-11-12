@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+//import qs from 'qs'
 import PropTypes from 'prop-types'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
@@ -56,14 +57,15 @@ function Form({ onResponse, onLoading }) {
   const handleData = (data) => {
     setFormData({ ...formData, data })
   }
-  const toObject = (array) => {
+  const toObject = (array) => { 
+    let subArr=[]
     return array.reduce((data, pair) => {
-      console.log(data, 'klkl')
       let key = pair.key
       let value = pair.value
       if (key === '') return data
-      return { ...data, [key]: value }
-    }, {})
+      data[key]?subArr=[...data[key],value]:subArr=value
+      return {...data,  [key]:subArr}
+    },{} )
   }
   const toJson = (data) => {
     try {
@@ -84,6 +86,9 @@ function Form({ onResponse, onLoading }) {
             url: formData.url,
             method: formData.method,
             params: toObject(formData.params),
+            // paramsSerializer: params=>{
+            //   return qs.stringify(params,{arrayFormat:'brackets'})
+            // } ,
             headers: toObject(formData.headers),
             data: toJson(formData.data),
           })
