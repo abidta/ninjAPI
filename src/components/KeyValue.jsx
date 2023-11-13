@@ -25,30 +25,34 @@ function KeyValue({ onChange, element, objValue, removeElement }) {
     })
   }
   return (
-    <div className="input-group my-2 ">
-      <input
-        onChange={handleKey}
-        value={keyInput}
-        type="text"
-        className="form-group "
-        placeholder="key"
-      />
-      <input
-        onChange={handleValue}
-        value={value}
-        type="text"
-        className="form-group me-2 "
-        placeholder="Value"
-      />
-      <button
-        onClick={(e) => {
-          e.preventDefault()
-          removeElement(objValue)
-        }}
-        className="btn btn-danger"
-      >
-        Remove
-      </button>
+    <div>
+      <div className="">
+        <div className="input-group my-2 mx-auto row">
+          <input
+            onChange={handleKey}
+            value={keyInput}
+            type="text"
+            className="form-group input-text col-5 "
+            placeholder="key"
+          />
+          <input
+            onChange={handleValue}
+            value={value}
+            type="text"
+            className="form-group  col-5"
+            placeholder="Value"
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              removeElement(objValue)
+            }}
+            className="btn btn-delete col-1"
+          >
+            <i className="bi bi-trash"></i>
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

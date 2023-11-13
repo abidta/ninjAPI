@@ -13,31 +13,39 @@ function UrlMethods({ onChange, setMethod }) {
     setMethod(e.target.value)
   }
   return (
-    <div className="input-group mb-5">
-      <select
-        value={select}
-        onChange={handleMethods}
-        className="form-select flex-grow-0 w-auto"
-      >
-        <option value="GET">GET</option>
-        <option value="POST">POST</option>
-        <option value="PUT">PUT</option>
-        <option value="PATCH">PATCH</option>
-        <option value="DELETE">DELETE</option>
-      </select>
-      <input
-        id="url"
-        value={url}
-        onChange={handleUrl}
-        name="url"
-        type="url"
-        placeholder="api"
-        className="me-2 flex-grow-1"
-        required
-      />
-      <button className="btn btn-primary" type="submit">
-        Send
-      </button>
+    <div className="input-group mb-5 row mx-auto justify-content-center">
+      <div className="col-3 col-md-2 pe-0">
+        <select
+          value={select}
+          onChange={handleMethods}
+          className="form-select "
+        >
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="PATCH">PATCH</option>
+          <option value="DELETE">DELETE</option>
+        </select>
+      </div>
+      <div className="col-9 col-md-8 mb-2 mb-md-0 ps-0">
+        {' '}
+        <input
+          id="url"
+          value={url}
+          onChange={handleUrl}
+          name="url"
+          type="url"
+          placeholder="api"
+          className="me-2 form-control"
+          required
+        />
+      </div>
+      <div className="col-12 col-md-2">
+        {' '}
+        <button className="btn btn-primary send-btn w-100" type="submit">
+          Send
+        </button>
+      </div>
     </div>
   )
 }
