@@ -1,39 +1,32 @@
 /* eslint-disable react/prop-types */
-import { useState,useEffect } from 'react'
+import { useState } from 'react'
 
 function KeyValue({ onChange, element, objValue, removeElement }) {
   const [keyInput, setKeyInput] = useState('')
   const [value, setValue] = useState('')
-  useEffect(() => {
-    
-  console.log(keyInput,'eff');
-    return () => {
-      console.log(keyInput,'ret');
-    }
-  }, [keyInput])
-  
+
   const handleKey = (e) => {
-    
     setKeyInput(e.target.value)
     onChange(
       element.map((obj) => {
         if (obj.id === objValue.id) {
           objValue.key = e.target.value
         }
-        
+
         return obj
       })
     )
   }
   const handleValue = (e) => {
     setValue(e.target.value)
-    onChange(element.map((obj) => {
-      if ((obj.id === objValue.id )&& objValue.key) {
-        objValue.value = e.target.value
-      }
-      return obj
-    }))
-   
+    onChange(
+      element.map((obj) => {
+        if (obj.id === objValue.id && objValue.key) {
+          objValue.value = e.target.value
+        }
+        return obj
+      })
+    )
   }
   return (
     <div>
