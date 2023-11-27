@@ -31,6 +31,7 @@ function Form({ onResponse, onLoading }) {
     data: {},
   })
   const updateForms = (element) => {
+    console.log(element);
     setFormData({
       ...formData,
       [element.type]: formData[element.type].filter((obj) => {
@@ -41,6 +42,7 @@ function Form({ onResponse, onLoading }) {
     })
   }
   const handleParams = (params) => {
+    //let paramObj = toObject(params)
     setFormData({ ...formData, params: params })
   }
   const handleHeaders = (headers) => {
@@ -55,15 +57,20 @@ function Form({ onResponse, onLoading }) {
   const handleData = (data) => {
     setFormData({ ...formData, data })
   }
-  const toObject = (array) => { 
-    let subArr=[]
+  const toObject = (array) => {
+    let subArr = []
     return array.reduce((data, pair) => {
       let key = pair.key
       let value = pair.value
       if (key === '') return data
-      data[key]?subArr=[...data[key],value]:subArr=value
-      return {...data,  [key]:subArr}
-    },{} )
+      data[key]
+        ? (subArr = Array.isArray(data[key])
+            ? [...data[key], value]
+            : (subArr = [subArr, value]))
+        : (subArr = value)
+      console.log(data[key], 'klk')
+      return { ...data, [key]: subArr }
+    }, {})
   }
   const toJson = (data) => {
     try {
@@ -78,7 +85,7 @@ function Form({ onResponse, onLoading }) {
         action=""
         onSubmit={(e) => {
           e.preventDefault()
-          console.log('form data before setup',formData);
+          console.log('form data before setup', formData)
           onLoading()
           axios({
             url: formData.url,
@@ -92,7 +99,7 @@ function Form({ onResponse, onLoading }) {
           })
             .catch((e) => e)
             .then((response) => {
-              console.log('Response data',response)
+              console.log('Response data', response)
               onResponse(response)
             })
         }}
