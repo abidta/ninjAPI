@@ -6,6 +6,7 @@ import CodeMirror, { basicSetup } from '@uiw/react-codemirror'
 import { json } from '@codemirror/lang-json'
 import { html } from '@codemirror/lang-html'
 import { githubLight } from '@uiw/codemirror-theme-github'
+import { getStatusColor } from '../constants/statusCodes'
 
 function Response({ response }) {
   const getContentType = (headers) => {
@@ -16,7 +17,10 @@ function Response({ response }) {
       <h3 className="text-center">Response</h3>
       <div className="d-flex my-2">
         <div className="ms-3"></div>
-        Status: <span>{response.status}</span>
+        Status:{' '}
+        <span style={{ color: getStatusColor(response.status) }}>
+          {response.status}{' '}
+        </span>
         <div className="ms-3">
           Time:{' '}
           <span>
